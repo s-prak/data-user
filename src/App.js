@@ -1,39 +1,12 @@
 import './App.css';
 import api from './api/axiosConfig';
 import { useState } from 'react';
-
-// Reusable InputField component
-const InputField = ({ value, onChange, placeholder }) => (
-  <input
-    type="text"
-    placeholder={placeholder}
-    value={value}
-    onChange={onChange}
-    className="input-field"
-  />
-);
-
-// Reusable Button component
-const Button = ({ onClick, text }) => (
-  <button onClick={onClick} className="search-button">
-    {text}
-  </button>
-);
-
-// Reusable DocumentResults component
-const DocumentResults = ({ docs }) => (
-  <div className="results-container">
-    <h3>Results:</h3>
-    <pre>{JSON.stringify(docs, null, 2)}</pre>
-  </div>
-);
-
-// No results found component
-const NoResultsFound = () => (
-  <div className="no-results">
-    <h3>No matches found</h3>
-  </div>
-);
+import InputField from './components/InputField';
+import Button from './components/Button';
+import DocumentResults from './components/DocumentResult';
+import NoResultsFound from './components/NoResultsFound';
+import { encrypt } from './crypto/encrypt';
+import { decrypt } from './crypto/decrypt';
 
 function App() {
   const [keyword, setKeyword] = useState('');
@@ -49,13 +22,16 @@ function App() {
 
     setLoading(true);
     setError('');
+
+    const encryptedKeyword=encrypt(keyword);
     
     try {
-      const response = await api.get(`/DataUser/${keyword}`);
+      const response = await api.get(`/DataUser/${encryptedKeyword}`);
       if (response.data === null || response.data.length === 0) {
         setDocs(null);  // Set docs to null to trigger NoResultsFound
       } else {
-        setDocs(response.data); // Otherwise, store the results
+        const decryptedDocument= decrypt(response.data);
+        setDocs(decryptedDocument); // Otherwise, store the results
       }
     } catch (err) {
       setError('Error fetching data. Please try again later.');
