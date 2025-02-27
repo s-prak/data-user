@@ -1,0 +1,23 @@
+/* Button.css */
+.custom-button {
+    background: linear-gradient(135deg, #6e8efb, #a777e3);
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  .custom-button:hover {
+    background: linear-gradient(135deg, #5a7be7, #9066d3);
+    transform: scale(1.05);
+  }
+  
+  .custom-button:active {
+    transform: scale(0.95);
+  }
+  

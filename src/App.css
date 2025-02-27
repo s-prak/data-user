@@ -69,3 +69,27 @@ h2 {
   color: #e74c3c;
   font-weight: bold;
 }
+
+h2 {
+  font-size: 28px;
+  font-weight: bold;
+  text-align: center;
+  color: #4a90e2;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  position: relative;
+  display: inline-block;
+  padding-bottom: 5px;
+}
+
+/* Add a stylish underline effect */
+h2::after {
+  content: "";
+  display: block;
+  width: 50%;
+  height: 4px;
+  background: linear-gradient(to right, #6e8efb, #a777e3);
+  margin: 5px auto 0;
+  border-radius: 2px;
+}

@@ -1,10 +1,13 @@
+import '../styles/components/InputField.css';
+
 const InputField = ({ value, onChange, placeholder }) => (
-    <input
-      type="text"
-      placeholder={placeholder}
-      value={value}
-      onChange={onChange}
-      className="input-field"
-    />
-  );
-  export default InputField;
+  <input
+    type="text"
+    placeholder={placeholder}
+    value={value}
+    onChange={onChange}
+    className="input-field"
+  />
+);
+
+export default InputField;
