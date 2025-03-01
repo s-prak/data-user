@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import api from '../api/axiosConfig';
-import DocumentResults from '../components/DocumentResult';
+import Card from '../components/Card';
 import { decrypt } from '../crypto/decrypt';
 
 function DocumentsPage() {
@@ -18,8 +18,7 @@ function DocumentsPage() {
     try {
       const response = await api.get('/DataUser');
       if (response.data && response.data.length > 0) {
-        const decryptedDocuments = response.data.map(doc => decrypt(doc));
-        setDocs(decryptedDocuments);
+        setDocs(response.data);
       } else {
         setDocs(null);
       }
@@ -31,12 +30,20 @@ function DocumentsPage() {
   };
 
   return (
-    <div className="documents-page">
-      <h2>All Documents</h2>
+    <div className="documents-page max-w-4xl mx-auto mt-10">
+      <h2 className="text-2xl font-bold text-gray-700 text-center mb-6">All Documents</h2>
       {loading && <div className="loader">Loading...</div>}
-      {error && <div className="error-message">{error}</div>}
+      {error && <div className="error-message text-red-500">{error}</div>}
       {docs === null && !loading && <div>No documents found.</div>}
-      {docs && docs.length > 0 && !loading && <DocumentResults docs={docs} />}
+      {docs && docs.length > 0 && !loading && (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {docs.map((doc) => (
+            <Card key={doc.id} title={`Keyword: ${doc.keyword}`}>
+              <p className="text-gray-600">Content: {doc.document}</p>
+            </Card>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
